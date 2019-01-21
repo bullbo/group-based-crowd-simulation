@@ -1,69 +1,56 @@
-from helper import *
-from Agent import *
+from Utilities import *
+from Constants import *
+from Group import Group
+from Agent import Agent
+from Wall import Wall
+
 import math
 import numpy as np
-from Constants import *
 import csv
 
 
+
+
 class Simulation:
-    """A Crowd consists of multiple Agents, and different methods to manipulate them."""
+    """A Simulation consists of multiple Agents, and walls."""
 
     def __init__(self):
         self.agents = []
         self.walls = []
+        self.groups = []
         self.amount_agents = 0
         self.amount_walls = 0
+        self.amount_groups = 0
 
-    def add_agent(self, agent):
-        """Adds an angent to the Crowd."""
+    def add_agent(self, position, destination, color):
+        """Adds an angent to the Simulation."""
+        agent = Agent(position, destination, color)
         agent.id = self.amount_agents
         self.agents.append(agent)
         self.amount_agents += 1
 
-    def add_wall(self, wall):
+    def add_wall(self, x0, y0, x1, y1):
+        """Adds a wall to the Simulation."""
+        wall = Wall(x0, y0, x1, y1)
         wall.id = self.amount_walls
         self.walls.append(wall)
         self.amount_walls += 1
 
+    def import_agent(self, agent):
+        """Imports an angent to the Simulation from a group."""
+        agent.id = self.amount_agents
+        self.agents.append(agent)
+        self.amount_agents += 1
+
     def add_group(self, n_agents, position, destination, color):
-        """Adds a group to the Crowd. 
-        To initialize the starting position, we let the agents spawn around the position
-        on a certain angle theta and distance d, away from the wanted initial point.
-        Essentialy we form a spiral around the initial point, with 6 agents covering the first
-        agent, 12 agents on top of the 6 agents etc. 
-        """
+        """Adds a group of agents to the Simulation."""
+        group = Group(n_agents, position, destination, color)
+        group.id = self.amount_groups
+        self.groups.append(group)
 
-        n = 1  # The n:th layer around the initial point.
-
-        x_origin = position[0]
-        y_origin = position[1]
-
-        self.add_agent(
-            Agent(np.array([x_origin, y_origin]), destination, color))
-
-        theta = 0.0
-        d = 6*AGENT_RADIUS
-
-        for _ in range(n_agents-1):
-            theta += (60*math.pi/180.0)/n
-
-            if theta < 2*math.pi:
-                x_temp = x_origin + d*math.cos(theta)
-                y_temp = y_origin + d*math.sin(theta)
-
-            else:
-                n += 1
-                if n % 2 == 0:
-                    theta = 0
-                else:
-                    theta = (60*math.pi/180.0)/n
-                d += 6*AGENT_RADIUS
-                x_temp = x_origin + d*math.cos(theta)
-                y_temp = y_origin + d*math.sin(theta)
-
-            self.add_agent(
-                Agent(np.array([x_temp, y_temp]), destination, color))
+        for agent in group.get_agents():
+            self.import_agent(agent)
+        self.amount_groups += 1
 
     def get_agents(self):
         """ Returns an array with all the agents in the crowd."""
@@ -73,15 +60,19 @@ class Simulation:
         """ Returns an all walls in the simulations. """
         return self.walls
 
+    def get_groups(self):
+        return self.groups
+
     def calc_goal_force(self, agent):
-        """ Returns the Goal Force. 
-        F_goal = (v_prefered - v_actual)/tau"""
+        """ Returns the Goal Force. """
         return (agent.desired_velocity*agent.direction-agent.velocity)/TAU
 
     def calc_agent_repulsion(self, agent, neighbor):
         """ Returns the total Repulsion Force (Social Force + Physical Force) 
         that affects each agent as a result of it's other neighbours. 
         The social force is weighted since forces behind a person typically don't affect the person.  
+
+        Agents within the same group experience less repelling force between each other. 
         """
 
         relative_distance = agent.position-neighbor.position
@@ -92,10 +83,8 @@ class Simulation:
         R = agent.radius + neighbor.radius
 
         # Social Forces
-        social_1 = (relative_distance + np.linalg.norm(diff_position))/4*b
-        social_2 = normalize(relative_distance) + normalize(diff_position)
-        social_3 = F_SOCIAL*np.exp(-b/SIGMA_SOCIAL)
-        social_force = social_1*social_2*social_3
+        social_force = F_SOCIAL*np.exp(-b/SIGMA_SOCIAL)*((relative_distance + np.linalg.norm(
+            diff_position))/4*b)*(normalize(relative_distance) + normalize(diff_position))
 
         # Physical Forces
         physical_force = F_PHYSICAL * \
@@ -106,7 +95,13 @@ class Simulation:
         angle = calc_angle(agent.position, agent.direction)
         weight = calc_weight(LAMBDA_ISOTROPY, angle)
 
-        return weight*social_force+physical_force
+        # If the neighbour is part of the group, the repelling force isn't as strong.
+        social_factor, physical_factor = 1, 1
+        if agent.group_id != -1 and agent.group_id == neighbor.group_id:
+            social_factor = GROUP_S_FACTOR
+            physical_factor = GROUP_P_FACTOR
+
+        return (weight*social_force*social_factor+physical_force*physical_factor)
 
     def calc_wall_repulsion(self, agent):
         """ Returns the total Repulsion Force from objects that affects each agent. 
@@ -163,12 +158,20 @@ class Simulation:
             else:
                 agent.velocity = estimated_velocity
 
+
+            # Stop the agent if the destination is reached
+            if np.all(np.isclose(agent.position, agent.destination, rtol=0.1)):
+                agent.velocity = 0
+                acceleration = 0
+
             # Updates the agents position
             agent.position = intial_position+initial_velocity*dt+0.5*acceleration*dt**2
 
             # Records the agents trail
             agent.x_trail.append(agent.position[0])
             agent.y_trail.append(agent.position[1])
+
+
 
     def write_to_CSV(self, frames, dt):
         """ Writes the whole simulation into two csv files containing the 
@@ -182,10 +185,10 @@ class Simulation:
                                         'TAR_Y ', 'AGENT_RADIUS ', 'COLOR_R ', 'COLOR_G ', 'COLOR_B '])
 
             sim_time = 0
-            for i in range(FRAMES):
+            for i in range(frames):
                 for agent in self.get_agents():
                     simulation_writer.writerow([sim_time, agent.id, round(agent.x_trail[i], 5), round(agent.y_trail[i], 5),
-                                                agent.destination[0], agent.destination[1], agent.radius, 1, 0, 0])
+                                                agent.destination[0], agent.destination[1], agent.radius, agent.color[0], agent.color[1], agent.color[2]])
                 sim_time += dt
 
         with open('walls.csv', mode='w') as simulation_file:
@@ -195,5 +198,5 @@ class Simulation:
                 ['ID ', 'P1_X ', 'P1_Y ', 'P2_X ', 'P2_Y '])
 
             for wall in self.get_walls():
-                simulation_writer.writerow([wall.get_id(), wall.get_start()[0], wall.get_start()[
-                                           1], wall.get_end()[0], wall.get_end()[1]])
+                simulation_writer.writerow([wall.get_id(), wall.get_x()[0], wall.get_y()[
+                                           0], wall.get_x()[-1], wall.get_y()[-1]])
