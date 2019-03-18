@@ -4,12 +4,11 @@ Using social forces for crowd simulations in a physics engineering degree projec
 For now, run '''SimDisplay.py''' to test out.
 Using numpy in python for the calculations we could plot the walls, agents and their trails with matplotlib.
 
-## 6 Groups with 22 Agents in total
-![](/images/22A_6G.gif)
 ## 8 Groups with 36 Agents in total
-![](/images/29A_8G.gif)
+![](/images/27A_8G.gif)
+Notice how the brown agent slows down to wait on the rest of the group, around frame 80.
 ## 10 Groups with 36 Agents in total
-![](/images/36A_10G.gif)
+![](/images/34A_10G.gif)
 ## 20 Groups with 71 Agents in total
 ![](/images/71A_20G.gif)
 ## 50 Groups with 166 Agents in total
