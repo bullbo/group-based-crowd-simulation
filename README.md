@@ -1,7 +1,7 @@
 # CrowdSim-SocialForces
 Using social forces for crowd simulations in a physics engineering degree project at KTH.
 
-
+Notice how the brown group immediately turn 180 degrees in the center.
 ## Unweighted orientation 
 ![](/images/21A_7G_UW.gif)
 ## Weighted orientation
