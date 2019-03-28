@@ -3,7 +3,7 @@ Using social forces for crowd simulations in a physics engineering degree projec
 
 
 ## Unweighted orientation 
-![](/images/31A_7G_UW.gif)
+![](/images/21A_7G_UW.gif)
 ## Weighted orientation
 ![](/images/21A_7G_W.gif)
 
