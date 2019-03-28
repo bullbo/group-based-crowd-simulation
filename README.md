@@ -3,9 +3,9 @@ Using social forces for crowd simulations in a physics engineering degree projec
 
 
 ## Unweighted orientation 
-![](/images/16A_5G_UW.gif)
+![](/images/31A_7G_UW.gif)
 ## Weighted orientation
-![](/images/16A_5G_W.gif)
+![](/images/21A_7G_W.gif)
 
 
 ## 8 Groups with 36 Agents in total
