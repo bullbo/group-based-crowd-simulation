@@ -1,6 +1,7 @@
 # CrowdSim-SocialForces
 Using social forces for crowd simulations in a physics engineering degree project at KTH.
 
+
 Notice how the brown group immediately turn 180 degrees in the center.
 ## Unweighted orientation 
 ![](/images/21A_7G_UW.gif)
@@ -8,9 +9,11 @@ Notice how the brown group immediately turn 180 degrees in the center.
 ![](/images/21A_7G_W.gif)
 
 
-## 8 Groups with 36 Agents in total
-![](/images/27A_8G.gif)
-Notice how the brown agent slows down to wait on the rest of the group, around frame 80.
+## Fundamental Diagrams
+![](/images/17A_6G_Fundamental.gif)
+
+### Agents removed from sim when destination is reached
+![](/images/26A_7G_Fundamental.gif)
 
 
 
