@@ -13,10 +13,10 @@ The results are the following
 
 
 ## Fundamental Diagrams
-![](/images/17A_6G_Fundamental.gif)
+![](/images/16A_6GFUND.gif)
+![](/images/26A_10GFUND.gif)
 
-### Agents removed from sim when destination is reached
-![](/images/26A_7G_Fundamental.gif)
+
 
 
 
