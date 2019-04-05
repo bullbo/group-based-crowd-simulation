@@ -10,9 +10,10 @@ The results are the following
 ## Weighted orientation
 ![](/images/17A_6G_Weighted.gif)
 
+## Fundamental Diagram for v_max = 1.3, 50 Simulations
+![](/v.1.5/funda.png)
 
-
-## Fundamental Diagrams
+## Real time fundamental diagrams for v_max = 0.8
 ![](/images/16A_6GFUND.gif)
 ![](/images/26A_10GFUND.gif)
 
