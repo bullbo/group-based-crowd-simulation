@@ -6,6 +6,7 @@ Here is a section from our report draft on how we managed the orientation proble
 
 The results are the following
 ## Unweighted orientation 
+Keep an eye on the blue group
 ![](/images/17A_6G_Unweighted.gif)
 ## Weighted orientation
 ![](/images/17A_6G_Weighted.gif)
