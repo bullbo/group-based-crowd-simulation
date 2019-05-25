@@ -3,7 +3,6 @@ This algorithm is a part of a bachelor thesis in engineering physics at KTH Roya
 
 Crowd simulations are useful in a variety of fields including entertain-
 ment, robotics and evacuation planning. 
-
 The social force model (SFM) uses a microscopic approach and simulates interactions between single
 agents to include group behaviour new group related attraction force that adds cohesiveness within groups
 is introduced. 
