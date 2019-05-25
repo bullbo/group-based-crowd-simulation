@@ -1,32 +1,44 @@
-# CrowdSim-SocialForces
-Using social forces for crowd simulations in a physics engineering degree project at KTH.
+# Simulation of Groups within Crowds using Social Forces
+Crowd simulations are useful in a variety of fields including entertain-
+ment, robotics and evacuation planning. 
 
-Here is a section from our report draft on how we managed the orientation problem. 
-![](/images/orientation.png)
+The social force model (SFM) uses a microscopic approach and simulates interactions between single
+agents to include group behaviour new group related attraction force that adds cohesiveness within groups
+is introduced. This algorithm is a part of a bachelor thesis in engineering physics at KTH 2019. 
 
-The results are the following
-## Unweighted orientation 
-Keep an eye on the blue group
-![](/images/17A_6G_Unweighted.gif)
-## Weighted orientation
-![](/images/17A_6G_Weighted.gif)
+## Running simulations
 
-## Fundamental Diagram for v_max = 1.3, 50 Simulations
-![](/v.1.5/funda.png)
+## Extract to CSV
 
-## Real time fundamental diagrams for v_max = 0.8
-![](/images/16A_6GFUND.gif)
-![](/images/26A_10GFUND.gif)
+### Dependencies
 
+The algorithm has a dependency available for Windows, Linux and OSX.
+The dependency include:
+  - Numpy
 
+This can be acquired via Anaconda or with  `pip ` using the following command:
 
-
+  `pip install numpy`
 
 
+   
+## Attribution
 
-The data could be imported to Unity, and be animated in 3D.
-![](/images/unitygif.gif)
-## TODO
-* Analyze the weight coefficients that is used for the obstacle and social forces.
-* Rename all variables to something shorter and descriptive.
-* Optimize all calculation methods, some of them are O(n^2).
+- Menge uses [www.sourceforge.net/projects/tinyxml](tinyxml) to parse XML.
+- Menge makes use of an implementation of normal random distrubtions implemented by John Burkardt.
+  See `src/MengeCore/Math/SimRandom.cpp` for details.
+- Menge uses [http://tclap.sourceforge.net/](tclap) to handle command-line parsing.
+- The GCF model (`src/Plugins/GCFAgent`) uses an algorithm for computing the distance of closest
+  approach (DCA) between two ellipses from http://www.math.kent.edu/~zheng/ellipsoid.c.
+
+If you use Menge as part of an academic publication, we request that you cite Menge as follows:
+
+```
+  @article{SFMG,
+	author = {Amin Bolakhrif, Julia Li},
+	title = {Simulation of Groups within Crowds using Social Forces},
+	year = {2019},
+	keywords = {crowd simulation; pedestrians; open source; groups; social force model},
+	url = {x}
+  }
+```
