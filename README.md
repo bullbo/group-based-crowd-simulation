@@ -1,3 +1,4 @@
+![header](https://i.imgur.com/7E258Dd.png)
 # Simulation of Groups within Crowds using Social Forces
 This algorithm is a part of a bachelor thesis in engineering physics at KTH Royal Institute of Technology 2019. 
 
@@ -6,6 +7,8 @@ ment, robotics and evacuation planning.
 The social force model (SFM) uses a microscopic approach and simulates interactions between single
 agents to include group behaviour new group related attraction force that adds cohesiveness within groups
 is introduced. 
+
+![header](https://i.imgur.com/gUJjis0.gif)
 
 ## Running simulations
 Inintialize a simulation by declaring the following
