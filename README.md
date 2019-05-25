@@ -44,6 +44,10 @@ Two CSV files will be created in the file directory,  `walls.csv` will have a he
 These CSV files can be used to vizualize the simulation in 3D using Unity-Crowd-Visualizer
 found here; https://github.com/hsaikia/Unity-Crowd-Visualizer .
 
+<p align="center">
+  <img width=400 height=200 src="https://i.imgur.com/NpCYxgR.gif">
+</p>
+
 ### Dependencies
 
 The algorithm has a dependency available for Windows, Linux and OSX.
