@@ -48,7 +48,7 @@ found here; https://github.com/hsaikia/Unity-Crowd-Visualizer .
   <img width=400 height=200 src="https://i.imgur.com/NpCYxgR.gif">
 </p>
 
-### Dependencies
+## Dependencies
 
 The algorithm has a dependency available for Windows, Linux and OSX.
 The dependency include:
