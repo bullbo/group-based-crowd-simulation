@@ -8,7 +8,7 @@ The social force model (SFM) uses a microscopic approach and simulates interacti
 agents to include group behaviour new group related attraction force that adds cohesiveness within groups
 is introduced. 
 
-![header](https://i.imgur.com/gUJjis0.gif)
+![header](https://media.giphy.com/media/JOQdlnLTC9lurYSPiz/giphy.gif)
 
 ## Running simulations
 Inintialize a simulation by declaring the following
